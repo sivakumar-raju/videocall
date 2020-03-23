@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .cards-list {
+    z-index: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    }
+
+    .card {
+    margin: 50px auto;
+    width: 641px;
+    height: 480px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
+    cursor: pointer;
+    /* transition: 0.4s; */
+    }
+
+    /* .card:hover {
+    transform: scale(0.9, 0.9);
+    box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25), 
+        -5px -5px 10px 15px rgba(0,0,0,0.22);
+    } */
+    .card_one {
+    margin: 17px;
+    width: 170px;
+    height: 125px;
+    /* border-radius: 10px; */
+    box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
+    cursor: pointer;
+    transition: 0.4s;
+    }
+
+    .card_one:hover {
+    transform: scale(0.9, 0.9);
+    box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25), -5px -5px 10px 15px rgba(0,0,0,0.22);
+    }
+
+
+    @media all and (max-width: 500px) {
+    .card-list {
+        flex-direction: column;
+    }
+    }
+
+    /* body {
+	background: #222032;
+} */
+
+    /* .box {
+        position: absolute;
+    top: 50%;
+    left: 50%;
+    } */
+
+    /* .object {
+    display: flex;
+        flex: 0 1 100%;
+    justify-content: center;
+    align-items: center;
+    align-content: stretch;
+    } */
+
+    /* .outline {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        border: 8px solid #B5A4A4;
+        animation: pulse 3s;
+        animation-timing-function: ease-out;
+        animation-iteration-count: infinite;
+        position: absolute;
+    } */
+
+    /* .button {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        background: #50CDDD;
+        box-shadow: 0px 0px 80px #0084F9;
+        position: absolute;
+    } */
+/* 
+    @keyframes pulse {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+            border: 65px solid #0B3082;
+    }
+    50% {
+            border: solid #A3FFC2;		
+            opacity: 0.8;
+    }
+        
+        90% {
+        transform: scale(3.2);
+            opacity: 0.2;
+            border: 3px solid #2E3CFF;
+    }
+    100% {
+        transform: scale(3.3);
+            opacity: 0;
+            border: 1px solid #7A89FF;
+    }
+    } */
+
+    #delayed {
+        animation-delay: 1.5s;
+    }
+
+    #circlein {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #6BD6E1;
+        box-shadow: 0px -2px 15px #E0FF94;
+        position: absolute;
+    }
+
+
+    #circlein_callend {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: red;
+        box-shadow: 0px -2px 15px #E0FF94;
+        position: absolute;
+    }
+
+    .fa-microphone {
+        height: 18px;
+        position: absolute;
+        margin: 24px;
+    }
+    .fa-video-camera {
+        height: 18px;
+        position: absolute;
+        margin: 22px;
+    }
+
+    .fa-phone {
+        height: 18px;
+        position: absolute;
+        margin: 22px;
+    }
+
+    #menuView ul>li {
+            display:inline-block;
+        }
+
+     .vdo-button {
+            background-color: #d12c79;
+            border: none;
+            color: white;
+            padding: 12px 16px 12px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 6px 4px;
+    }
+    .button-radius {border-radius: 50%;}
+
+</style>
+<head>
+    <!-- <script src="D:\twilio-video.js-master\twilio-video.js-master\src\twilio-video.js"></script> -->
+    <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
+    <script src="https://media.twiliocdn.com/sdk/js/conversations/v0.13/twilio-conversations.min.js"></script>
+    <script src="https://media.twiliocdn.com/sdk/js/video/releases/2.0.0/twilio-video.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+   
+</head>
+
+<body>
+    <div id="videoCall"></div>
+    <div class="cards-list">
+        <div class="card 1" id="room"></div>
+        <div style="margin-top: 50px;">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card_one" style="flex-direction: column" id="room1"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card_one" style="flex-direction: column" id="room1"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card_one" style="flex-direction: column"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card_one" style="flex-direction: column"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card_one" style="flex-direction: column"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card_one" style="flex-direction: column"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card_one" style="flex-direction: column"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card_one" style="flex-direction: column"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card_one" style="flex-direction: column"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 50px;">
+        <div class="col-md-4"></div>
+        <div class="col-md-1">
+            <!-- <div class="mic-icon">
+                <i onclick="myFunction(this)" class="fa fa-microphone " id="circlein" ></i>
+            </div> -->
+            <div class="box">
+                <div class="object">
+                       <div class="outline">
+                       </div>
+                       <div class="outline" id="delayed">
+                       </div>
+                       <div class="button">
+                       </div>
+                       <div class="button" id="circlein">
+                           <!-- <svg class="mic-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve" style="fill:#1E2D70">
+           <g><path d="M500,683.8c84.6,0,153.1-68.6,153.1-153.1V163.1C653.1,78.6,584.6,10,500,10c-84.6,0-153.1,68.6-153.1,153.1v367.5C346.9,615.2,415.4,683.8,500,683.8z M714.4,438.8v91.9C714.4,649,618.4,745,500,745c-118.4,0-214.4-96-214.4-214.4v-91.9h-61.3v91.9c0,141.9,107.2,258.7,245,273.9v124.2H346.9V990h306.3v-61.3H530.6V804.5c137.8-15.2,245-132.1,245-273.9v-91.9H714.4z"/></g>
+           </svg> -->
+                           <div onclick="microphone(this)" class="fa fa-microphone " ></div>
+                       </div>
+                </div>
+           </div> 
+        </div>
+        <div class="col-md-1">
+            <!-- <div class="mic-icon">
+                <i onclick="myFunction(this)" class="fa fa-microphone " id="circlein" ></i>
+            </div> -->
+            <div class="box">
+                <div class="object">
+                       <div class="outline">
+                       </div>
+                       <div class="outline" id="delayed">
+                       </div>
+                       <div class="button">
+                       </div>
+                       <div class="button" id="circlein">
+                           <!-- <svg class="mic-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve" style="fill:#1E2D70">
+           <g><path d="M500,683.8c84.6,0,153.1-68.6,153.1-153.1V163.1C653.1,78.6,584.6,10,500,10c-84.6,0-153.1,68.6-153.1,153.1v367.5C346.9,615.2,415.4,683.8,500,683.8z M714.4,438.8v91.9C714.4,649,618.4,745,500,745c-118.4,0-214.4-96-214.4-214.4v-91.9h-61.3v91.9c0,141.9,107.2,258.7,245,273.9v124.2H346.9V990h306.3v-61.3H530.6V804.5c137.8-15.2,245-132.1,245-273.9v-91.9H714.4z"/></g>
+           </svg> -->
+                           <div onclick="camera(this)" class="fa fa-video-camera" ></div>
+                       </div>
+                </div>
+           </div> 
+        </div>
+        <div class="col-md-1">
+            <!-- <div class="mic-icon">
+                <i onclick="myFunction(this)" class="fa fa-microphone " id="circlein" ></i>
+            </div> -->
+            <div class="box">
+                <div class="object">
+                       <div class="outline">
+                       </div>
+                       <div class="outline" id="delayed">
+                       </div>
+                       <div class="button">
+                       </div>
+                       <div class="button" id="circlein_callend">
+                           <!-- <svg class="mic-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve" style="fill:#1E2D70">
+           <g><path d="M500,683.8c84.6,0,153.1-68.6,153.1-153.1V163.1C653.1,78.6,584.6,10,500,10c-84.6,0-153.1,68.6-153.1,153.1v367.5C346.9,615.2,415.4,683.8,500,683.8z M714.4,438.8v91.9C714.4,649,618.4,745,500,745c-118.4,0-214.4-96-214.4-214.4v-91.9h-61.3v91.9c0,141.9,107.2,258.7,245,273.9v124.2H346.9V990h306.3v-61.3H530.6V804.5c137.8-15.2,245-132.1,245-273.9v-91.9H714.4z"/></g>
+           </svg> -->
+                           <div onclick="callEndRoom()" id="end_room" class="fa fa-phone"></div>
+                       </div>
+                </div>
+           </div> 
+        </div>
+        <div classs="col-md-1"></div>
+    </div>
+ 
+
+</body>
+</html>
+
+
+<script>
+
+function microphone(x) {
+  x.classList.toggle("fa-microphone-slash");
+}
+function camera(y) {
+  y.classList.toggle("fa-stop");
+  console.log(y)
+}
+function callEndRoom(z) {
+     
+}
+
+document.getElementById("end_room").disabled = true;
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzQxY2Q2ZjllNjFiOGFmYjFjYWYwMmJkNDk0MGRmYjA2LTE1ODQ5NTk3MzUiLCJncmFudHMiOnsidmlkZW8iOnsicm9vbSI6InJ4NEByeGNhcmVuZXQub3JnXzMifSwiaWRlbnRpdHkiOiJkb2N0b3IifSwiaXNzIjoiU0s0MWNkNmY5ZTYxYjhhZmIxY2FmMDJiZDQ5NDBkZmIwNiIsImV4cCI6MTU4NDk2MzMzNSwibmJmIjoxNTg0OTU5NzM1LCJzdWIiOiJBQ2Y3ZWQzNDQ1NzFlMzA2NzFiODMxYmJkMWE5MzFhYjdjIn0.eLQZ2U9Qy3V5VupKdGKCsav8ewxv_hnfeS-_D-kzgVY'
+Twilio.Video.connect(token, {name:'rx4@rxcarenet.org_3'}).then(function(room) {
+  console.log('Successfully joined a Room: ', room);
+    
+room.participants.forEach( function (participant) {  
+        console.log(`Participant "${participant.identity}" is connected to the Room`);  
+        participant.tracks.forEach( function (publication) {
+          if (publication.isSubscribed) {
+            var track = publication.track;
+          }
+        });
+        participant.on('trackSubscribed', function (track) {
+          document.getElementById('room1').appendChild(track.attach()).style = "width:170px";
+          document.getElementById("connect_name").textContent = "Connected with "+participant.identity;
+          document.getElementById("end_room").disabled = false;
+          this.participantConnected = true;
+          // this.liveVdoHide = false;
+        }); 
+      });
+
+
+
+
+  room.on('participantConnected', function(participant) {
+    console.log('A remote Participant connected: ', participant);
+    participant.tracks.forEach( function (publication) {
+          if (publication.isSubscribed) {
+            var track = publication.track;
+          }
+        });
+  
+        participant.on('trackSubscribed', function (track) {
+          document.getElementById('room1').appendChild(track.attach()).style = "width:170px";
+          document.getElementById("connect_name").textContent = "Connected with "+participant.identity;
+          document.getElementById("end_room").disabled = false;
+          this.participantConnected = true;
+          // this.liveVdoHide = false;
+        });  
+  })
+}, function(error) {
+    console.error('Unable to connect to Room: ' +  error.message);
+});
+
+
+
+Twilio.Video.createLocalVideoTrack().then(function(videoTrack) {
+  console.log('videoTrack', videoTrack);
+  const videoElement = videoTrack.attach();
+  document.getElementById('room').appendChild(videoElement)  
+//    document.getElementById('room1').appendChild(videoElement).style = "width:170px";
+   var buttonElement = document.getElementById('video_stop');
+        // buttonElement.addEventListener('click', function (event) {
+        //   track.stop(); 
+        //   this.callEndRoom();
+        // });
+});
+   
+</script>+
